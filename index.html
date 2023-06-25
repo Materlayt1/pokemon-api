@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            background-image: linear-gradient(90deg,#4743d0,#880868);
+            overflow: auto;
+        }
+        .container{
+            width: 80%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        .poke-box{
+            border-radius: 10px;
+            background-color: white;
+            text-align: center;
+        }
+        .poke-box img{
+            width: 80%;
+        }
+        .title{
+            color: #4743d0;
+            font-size: 20px;
+            padding-bottom: 10px;
+        }
+        .color{
+            color: red;
+            font-size: 18px;
+            padding: 5px;
+        }
+        .title::first-letter{
+            text-transform: uppercase;
+        }
+        input{
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            border: none;
+            padding: 5px;
+            background-color: transparent;
+            border-bottom: 1px solid yellow;
+            color: white;
+            font-weight: bolder;
+            font-size: 18px;
+            outline: none;
+            
+            
+            
+            
+        }
+        button{
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left:60%;
+            transform: translate(-60%,-50%);
+            
+        }
+        .search{
+            position: relative;
+            
+            width: 100%;
+            height: 150px;
+        }
+       
+
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="search">
+    <input type="text" placeholder="Search..." >
+     
+    
+    </div>
+    <div class="container">
+        
+
+       
+
+   
+
+
+    <script>
+        const urll = "https://pokeapi.co/api/v2/pokemon";
+        const secondUrl = "https://pokeapi.co/api/v2/pokemon/1/";
+
+        const cont = document.querySelector(".container");
+
+        fetch(urll).then(respons => respons.json()).then(response => api(response))
+      
+
+
+
+
+        function api(element) {
+            const eleman = element.results
+      
+
+
+            for (let i = 0; i < eleman.length; i++) {
+
+
+                
+                const container = document.createElement("div");
+                container.classList.add("poke-box")
+                const title = document.createElement("div");
+                title.classList.add("title")
+
+                title.innerHTML = eleman[i].name;
+
+               
+
+                const res = fetch(eleman[i].url).then(res => res.json()).then(ress => apıtwo(ress));
+
+                function apıtwo(ress) {
+                    
+                    const img = document.createElement("div")
+                    img.classList.add("image");
+                    const image = document.createElement("img")
+                    image.src = ress.sprites.front_default
+
+                    img.appendChild(image);
+
+                    
+
+                    const color = document.createElement("div")
+                    color.classList.add("color");
+                    color.innerHTML = `#`+ ress.base_experience
+
+                    container.appendChild(img); 
+                    container.appendChild(color);
+                    container.appendChild(title);
+                    
+
+
+
+
+                }
+               
+
+
+
+
+                cont.appendChild(container)
+
+            }
+
+
+
+            const input = document.querySelector("input")
+            const btn = document.querySelector("button")
+
+           
+            input.addEventListener("input",find)
+
+            function find(){
+                   const text = input.value.toLowerCase()
+                   console.log(text)
+
+                   const tt = document.querySelectorAll(".title")
+                   tt.forEach(tit => {
+                      
+                    if (tit.textContent.toLowerCase().includes(text)){
+
+                        tit.parentElement.style.display ="block"
+                    }
+                    else{
+                        tit.parentElement.style.display ="none"
+                    }
+
+                   } )
+
+            }
+
+            
+
+
+        }
+    </script>
+</body>
+
+</html>
